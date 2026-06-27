@@ -1,14 +1,13 @@
 <img width="1852" height="877" alt="image" src="https://github.com/user-attachments/assets/3765e816-7549-4af7-8ec9-22efdbf615ba" />
 
-```markdown
 # ⚡ TurboVec RAG Benchmarking with Ollama + LlamaIndex
 
 ## 🧠 Overview
 
-This project benchmarks the performance of a Retrieval-Augmented Generation (RAG) pipeline using:
+This project benchmarks a Retrieval-Augmented Generation (RAG) system by comparing:
 
-- **Baseline vector store (SimpleVectorStore)**
-- **TurboVec compressed vector store (4-bit quantization)**
+- 🔹 Baseline Vector Store (`SimpleVectorStore`)
+- 🔹 TurboVec Optimized Store (4-bit quantized vectors)
 
 It evaluates improvements in:
 - Retrieval speed
@@ -17,38 +16,52 @@ It evaluates improvements in:
 - Storage efficiency
 
 The system uses:
-- LlamaIndex for RAG orchestration
+- LlamaIndex for RAG pipeline orchestration
 - HuggingFace embeddings (`all-MiniLM-L6-v2`)
 - Ollama local LLM (`Gemma 2B`)
-- TurboVec for compressed vector search
+- TurboVec for compressed vector storage
 
 ---
 
 # 🏗️ Architecture
 
-```
+## 🔹 RAG Pipeline Flow
+            ┌──────────────────────────┐
+            │      Document Input      │
+            └────────────┬─────────────┘
+                         ↓
+            ┌──────────────────────────┐
+            │  Embedding Model (384D)  │
+            │  MiniLM-L6-v2            │
+            └────────────┬─────────────┘
+                         ↓
+            ┌──────────────────────────┐
+            │     Vector Store         │
+            └───────┬─────────┬────────┘
+                    ↓         ↓
+     ┌──────────────────┐  ┌──────────────────┐
+     │ Baseline Store   │  │   TurboVec Store │
+     │ SimpleVectorStore│  │  4-bit Quantized │
+     └────────┬─────────┘  └────────┬─────────┘
+              ↓                      ↓
+     ┌──────────────────────────────────────┐
+     │        Retrieval (Top-K = 3)        │
+     └──────────────────┬───────────────────┘
+                        ↓
+            ┌──────────────────────────┐
+            │   Ollama LLM (Gemma 2B)  │
+            └────────────┬─────────────┘
+                         ↓
+            ┌──────────────────────────┐
+            │      Final Answer        │
+            └──────────────────────────┘
 
-Document
-↓
-Embedding Model (MiniLM)
-↓
-Vector Store
-├── Baseline (SimpleVectorStore)
-└── TurboVec (4-bit compressed index)
-↓
-Retrieval (Top-K)
-↓
-LLM (Ollama Gemma 2B)
-↓
-Final Answer
-
-```
 
 ---
 
 # 🚀 Key Features
 
-## 📊 1. Performance Benchmarking
+## 📊 1. Benchmarking System
 Compares baseline vs TurboVec on:
 - Index build time
 - Retrieval latency
@@ -57,96 +70,39 @@ Compares baseline vs TurboVec on:
 
 ---
 
-## 🧠 2. TurboVec Compression
-- 4-bit quantized embeddings
-- Memory-efficient vector storage
-- Faster similarity search due to reduced memory bandwidth
-
----
-
-## ⚡ 3. Speedup Analysis
-Automatically calculates:
+## ⚡ 2. Speedup Analysis
+Automatically computes:
 - Retrieval speedup
-- End-to-end pipeline speedup
+- End-to-end speedup
 - Latency improvement per query
 
 ---
 
-## 📦 4. Storage Estimation
-- Approximate index memory footprint comparison
-- Compression impact analysis (float32 vs 4-bit)
+## 🧠 3. TurboVec Compression
+- 4-bit quantized embeddings
+- Reduced memory footprint
+- Faster similarity search
+- Cache-friendly vector operations
+
+---
+
+## 📦 4. Storage Analysis
+- Approximate index memory comparison
+- Float32 vs 4-bit compression evaluation
 
 ---
 
 # 📁 Project Structure
 
-```
-
 .
-├── app_3.py              # Main benchmarking script (baseline vs TurboVec)
+├── app_3.py # Main benchmarking script
 ├── data/
-│   └── Quantum_Computing_Overview.txt
+│ └── Quantum_Computing_Overview.txt
 ├── README.md
 └── requirements.txt
 
-````
-
----
-
-# ⚙️ Installation
-
-```bash
-pip install llama-index
-pip install llama-index-core
-pip install sentence-transformers
-pip install ollama
-pip install turbovec
-````
-
----
-
-# ▶️ How to Run
-
-## 1. Start Ollama model
-
-```bash
-ollama run gemma:2b
-```
-
-> Ensure CPU mode if needed:
-
-```python
-"options": {"num_gpu": 0}
-```
-
----
-
-## 2. Run Benchmark
-
-```bash
-python app_3.py
-```
 
 ---
 
 
-# 🧠 Why TurboVec Improves Performance
-
-## 1. Memory Compression
-
-* 4-bit quantization reduces embedding size significantly
-* Better CPU cache utilization
-
-## 2. Faster Retrieval
-
-* Lower memory bandwidth usage
-* Faster similarity search
-
-## 3. Efficient Context Usage
-
-* More relevant retrieval results
-* Smaller context passed to LLM
-* Lower token inference cost
-
----
 
