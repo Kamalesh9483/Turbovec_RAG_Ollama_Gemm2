@@ -1,3 +1,5 @@
+<img width="1852" height="877" alt="image" src="https://github.com/user-attachments/assets/3765e816-7549-4af7-8ec9-22efdbf615ba" />
+
 ```markdown
 # ⚡ TurboVec RAG Benchmarking with Ollama + LlamaIndex
 
@@ -148,4 +150,3 @@ python app_3.py
 
 ---
 
-<img width="1680" height="682" alt="image" src="https://github.com/user-attachments/assets/9fd79c1c-a902-460b-b10d-172a443ef993" />
