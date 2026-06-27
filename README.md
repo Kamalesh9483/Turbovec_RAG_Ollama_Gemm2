@@ -92,17 +92,5 @@ Automatically computes:
 
 ---
 
-# 📁 Project Structure
-
-.
-├── app_3.py # Main benchmarking script
-├── data/
-│ └── Quantum_Computing_Overview.txt
-├── README.md
-└── requirements.txt
-
-
----
-
 
 
